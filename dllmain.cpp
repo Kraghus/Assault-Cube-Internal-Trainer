@@ -65,11 +65,6 @@ DWORD WINAPI HackThread(HMODULE hModule)
 
             if (bAmmo)
             {
-                uintptr_t ammoAddress = memory::FindDMAAddress(moduleBase + 0x10f4f4, { 0x374, 0x14, 0x0 });
-                int* ammo = (int*)ammoAddress;
-                *ammo = 99;
-
-                //
                 *(int*)memory::FindDMAAddress(moduleBase + 0x10f4f4, { 0x374, 0x14, 0x0 }) = 99;
             }
         }
