@@ -33,6 +33,11 @@ DWORD WINAPI HackThread(HMODULE hModule)
         if (GetAsyncKeyState(VK_NUMPAD1) & 1)
         {
             bArsenal = !bArsenal;
+            
+            if (bArsenal)
+                std::cout << "[NUMPAD 1 - Arsenal Activated.]\n";
+            else
+                std::cout << "[NUMPAD 1 - Arsenal Deactivated.]\n";
         }
 
         if (GetAsyncKeyState(VK_NUMPAD2) & 1)
@@ -42,11 +47,13 @@ DWORD WINAPI HackThread(HMODULE hModule)
             if (bRecoil)
             {
                 memory::NOP((BYTE*)(moduleBase + 0x63786), 10);
+                std::cout << "[NUMPAD 2 - Recoil Deactivated.]\n";
             }
 
             else
             {
                 memory::Patch((BYTE*)(moduleBase + 0x63786), (BYTE*)"\x50\x8d\x4c\x24\x1c\x51\x8b\xce\xff\xd2", 10);
+                std::cout << "[NUMPAD 2 - Recoil Activated.]\n";
             }
         }
 
@@ -56,10 +63,10 @@ DWORD WINAPI HackThread(HMODULE hModule)
         {
             if (bArsenal)
             {
-                *(int*)(*localPlayerPtr + 0xf8) = 999;
-                *(int*)(*localPlayerPtr + 0xfc) = 99;
-                *(int*)(*localPlayerPtr + 0x158) = 99;
-                *(int*)memory::FindDMAAddress(moduleBase + 0x10f4f4, { 0x374, 0x14, 0x0 }) = 99;
+                *(int*)(*localPlayerPtr + 0xf8) = 500; // health
+                *(int*)(*localPlayerPtr + 0xfc) = 100; // armor 
+                *(int*)(*localPlayerPtr + 0x158) = 20; // grenades
+                *(int*)memory::FindDMAAddress(moduleBase + 0x10f4f4, { 0x374, 0x14, 0x0 }) = 20; // current weapon ammo
             }
         }
         Sleep(5);
