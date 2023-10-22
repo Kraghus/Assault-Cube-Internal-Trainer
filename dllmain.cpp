@@ -24,7 +24,7 @@ DWORD WINAPI HackThread(HMODULE hModule)
     // Create a hack loop
     while (true)
     {
-        // Get key input
+        // Take key input
         if (GetAsyncKeyState(VK_END) & 1)
         {
             break;
