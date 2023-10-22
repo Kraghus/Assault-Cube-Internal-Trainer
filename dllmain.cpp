@@ -60,7 +60,7 @@ DWORD WINAPI HackThread(HMODULE hModule)
         {
             if (bHealth)
             {
-                *(int*)(localPlayerPtr + 0xf8) = 999;
+                *(int*)(*localPlayerPtr + 0xf8) = 999;
             }
 
             if (bAmmo)
