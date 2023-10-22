@@ -18,7 +18,8 @@ DWORD WINAPI HackThread(HMODULE hModule)
     // Get module base address
     uintptr_t moduleBase = (uintptr_t)GetModuleHandle(L"ac_client.exe");
 
-    bool bHealth = false, bAmmo = false, bRecoil = false;
+    bool bArsenal = false;
+    bool bRecoil = false;
 
     // Create a hack loop
     while (true)
@@ -31,15 +32,10 @@ DWORD WINAPI HackThread(HMODULE hModule)
 
         if (GetAsyncKeyState(VK_NUMPAD1) & 1)
         {
-            bHealth = !bHealth;
+            bArsenal = !bArsenal;
         }
 
         if (GetAsyncKeyState(VK_NUMPAD2) & 1)
-        {
-            bAmmo = !bAmmo;
-        }
-
-        if (GetAsyncKeyState(VK_NUMPAD3) & 1)
         {
             bRecoil = !bRecoil;
 
@@ -58,13 +54,11 @@ DWORD WINAPI HackThread(HMODULE hModule)
 
         if (localPlayerPtr)
         {
-            if (bHealth)
+            if (bArsenal)
             {
                 *(int*)(*localPlayerPtr + 0xf8) = 999;
-            }
-
-            if (bAmmo)
-            {
+                *(int*)(*localPlayerPtr + 0xfc) = 99;
+                *(int*)(*localPlayerPtr + 0x158) = 99;
                 *(int*)memory::FindDMAAddress(moduleBase + 0x10f4f4, { 0x374, 0x14, 0x0 }) = 99;
             }
         }
